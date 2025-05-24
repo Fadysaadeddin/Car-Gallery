@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import User from "../models/User";
 export const Register = async (req: Request, res: Response): Promise<any> => {
   try {
@@ -21,6 +22,42 @@ export const Register = async (req: Request, res: Response): Promise<any> => {
     });
   } catch (err) {
     console.error("Error in register route:", err);
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+export const Login = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    // Generate JWT token
+    const token = jwt.sign(
+      { userId: user._id, email: user.email },
+      process.env.JWT_SECRET || "your-secret-key",
+      { expiresIn: "1h" }
+    );
+
+    return res.status(200).json({
+      message: "Login successful",
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+      },
+      token,
+    });
+  } catch (err) {
+    console.error("Error in login route:", err);
     return res.status(500).json({ error: "Something went wrong" });
   }
 };

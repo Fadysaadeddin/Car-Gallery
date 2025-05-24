@@ -7,7 +7,6 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   background-color: #fff;
   font-family: Arial, sans-serif;
-  
 }
 
 .register {
@@ -18,8 +17,6 @@
   margin-bottom: 1.5rem;
   color: #333;
 }
-
-
 
 .register-input {
   width: 100%;
@@ -70,3 +67,16 @@
   background-color: #c1351d;
 }
 
+.login-link {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.login-link a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}

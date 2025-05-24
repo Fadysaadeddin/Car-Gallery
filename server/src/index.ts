@@ -14,8 +14,8 @@ const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 
-// Routes placeholder
-app.use("/api/users", userRoutes);
+// Change the route from /api/users to /api
+app.use("/api", userRoutes);
 app.get("/", (_req, res) => {
   res.send("Car Gallery API is running!");
 });
