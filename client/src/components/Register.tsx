@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useApi } from "../hooks/useApi";
-import "../styles/Register.css";
+import { FcGoogle } from "react-icons/fc";
+import styles from "../styles/shared/AuthForms.module.css";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -33,54 +34,81 @@ export default function Register() {
     }
   };
 
+  const handleGoogleRegister = () => {
+    // TODO: Implement Google registration
+    console.log("Google register clicked");
+  };
+
   return (
-    <>
-      <h1 className="register">Register a User</h1>
-      <form className="register-form" onSubmit={handleSubmit}>
-        <h2 className="register">Register</h2>
-        <input
-          type="text"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          placeholder="Enter your name"
-          className="register-input"
-        />
-        <input
-          type="email"
-          name="email"
-          value={form.email}
-          onChange={handleChange}
-          placeholder="Enter your email"
-          className="register-input"
-        />
-        <input
-          type="password"
-          name="password"
-          value={form.password}
-          onChange={handleChange}
-          placeholder="Enter your password"
-          className="register-input"
-        />
-        <button type="submit" className="register-button">
+    <div className={styles.authContainer}>
+      <form className={styles.authForm} onSubmit={handleSubmit}>
+        <h2>Create Account</h2>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+      
+
+        <button type="submit" className={styles.submitButton}>
           Register
         </button>
+  {loading && <p className={styles.loading}>Creating account...</p>}
+        {error && <p className={styles.error}>{error}</p>}
+        {registered && (
+          <p className={styles.success}>{form.name} registered successfully!</p>
+        )}
+        <div className={styles.divider}>
+          <span>or</span>
+        </div>
 
-        <button type="button" className="google-auth-button">
+        <button
+          type="button"
+          className={styles.googleButton}
+          onClick={handleGoogleRegister}
+        >
+          <FcGoogle size={20} />
           Register with Google
         </button>
 
-        {registered && (
-          <p className="register-success">{form.name} created successfully</p>
-        )}
-        {loading && <p>Registering...</p>}
-        {error && <p className="error">{error}</p>}
+        <div className={styles.linkContainer}>
+          <p>
+            Already have an account? <Link to="/login">Login</Link>
+          </p>
+        </div>
       </form>
-      <div className="login-link">
-        <p>
-          Already registered? <Link to="/login">Login</Link>
-        </p>
-      </div>
-    </>
+    </div>
   );
 }
