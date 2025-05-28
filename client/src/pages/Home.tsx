@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar/Navbar";
 import styles from "../styles/Home.module.css";
 
 const Home = () => {
@@ -13,18 +14,12 @@ const Home = () => {
     }
   }, [token, user.id, navigate]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    navigate("/login");
-  };
-
   return (
-    <div className={styles.homeContainer}>
-      <h1>Welcome, {user.name}!</h1>
-      <button onClick={handleLogout} className={styles.logoutButton}>
-        Logout
-      </button>
+    <div className={styles.pageContainer}>
+      <Navbar />
+      <main className={styles.mainContent}>
+        <h1>Welcome to Car Gallery!</h1>
+      </main>
     </div>
   );
 };

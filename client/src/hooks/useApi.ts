@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { useState } from "react";
 
 interface ApiResponse<T> {
@@ -9,7 +9,7 @@ interface ApiResponse<T> {
     endpoint: string,
     method: "POST" | "GET",
     data?: any
-  ) => Promise<AxiosResponse<T> | undefined>;
+  ) => Promise<any>;
 }
 
 export function useApi<T>(): ApiResponse<T> {
@@ -21,7 +21,7 @@ export function useApi<T>(): ApiResponse<T> {
     endpoint: string,
     method: "POST" | "GET" = "GET",
     requestData?: any
-  ): Promise<AxiosResponse<T> | undefined> => {
+  ): Promise<any> => {
     try {
       setLoading(true);
       setError(null);
